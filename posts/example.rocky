@@ -1,5 +1,14 @@
-[ slug hello ]
+] slug hello
+] title Testing Rocky Raccoon
+] date 2021-04-06
+] template base
 
-Hello
+[ section Introduction ]
+
+It's a good day [ b hello world ] everyone
+
+[ subsection Flamengo = best team ]
+
+wow [ link google.com Melhor Site de todos ] does this work?
 
 This is my first post

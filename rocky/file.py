@@ -1,35 +1,66 @@
-from line import Line, LineType
 from fileio import savefile
+import re
+
+patterns = {
+    'setter' : '(]) (\w+) (.+)',
+    'tag' : '(\[) (\w+) (.+) (])',
+    'link' : '([^ ]+) (.+)',
+}
+
+substitutes = {
+    'link' : r'<a href="\1">\2</a>',
+    'img'  : r'<img href="\1" alt="\2">'
+}
 
 class File:
     def __init__(self, path, raw):
         self.path = path
         self.raw = raw
+
+        self.parsed = ""
         self.attributes = {}
-
-        self.lines = []
         for line in raw:
-            self.lines.append(self.parseline(line))
+            self.parseline(line)
 
-    def parseline(self, line):
-        words = line.split(' ')
-        if words[0] == '[':
-            print('Set', words[1], 'to', words[2])
-            self.attributes[words[1]] = words[2]
-            return Line(LineType.Attribute, line)
-        return Line(LineType.Content, line)
+        self.templated = ""
+
+    def parseSetter(self, line):
+        result = re.match(patterns['setter'], line)
+
+        key = result.group(2)
+        value = result.group(3)
+    
+        print("Set", key, "\tto", value)
+        self.attributes[key] = value
+
+    def processTag(self, tag, content):
+        if tag == 'link':
+            newline = re.sub(patterns['link'], substitutes['link'], content)
+            return newline
+        if tag == 'image':
+            newline = re.sub(patterns['link'], substitutes['img'], content)
+            return newline
+
+        if tag == 'section':
+            tag = 'h1'
+        elif tag == 'subsection':
+            tag = 'h2'
+        return '<'+tag+'>' + content + '</'+tag+'>'
+
+    def parseTag(self, line):
+        result = re.search(patterns['tag'], line)
+
+        tag = result.group(2)
+        content = result.group(3)
         
+        print("Processing", tag, "\t", content)
 
-    def writefile(self, outdir):
-        if not 'slug' in self.attributes:
-            print("File has no name")
-        else:
-            savefile(outdir, self.attributes['slug'], self.get_html())
-
-    def get_html(self):
-        result = ""
-        for line in self.lines:
-            if line.type == LineType.Content:
-                result += line.content + '\n'
-
-        return '<html>' + result + '</html>'
+        processed = self.processTag(tag, content)
+        newline = re.sub(patterns['tag'], processed, line)
+        return newline
+    
+    def parseline(self, line):
+        if re.match(patterns['setter'], line):
+            self.parseSetter(line)
+        elif re.search(patterns['tag'], line):
+            self.parsed += self.parseTag(line) + '\n'

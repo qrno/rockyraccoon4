@@ -29,5 +29,6 @@ def get_file_content(path):
     return content
 
 def savefile(dir, filename, content):
-    outfile = open(join(dir, filename + '.html'), "w")
+    print("Writing", filename, "to", dir)
+    outfile = open(join(dir, filename), "w")
     outfile.write(content)
