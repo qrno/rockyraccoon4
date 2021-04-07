@@ -3,13 +3,26 @@ import re
 
 patterns = {
     'setter' : '(]) (\w+) (.+)',
-    'tag' : '(\[) (\w+) (.+) (])',
+    'tag' : '(\[) (\w+) (.[^\]]+) (])',
     'link' : '([^ ]+) (.+)',
 }
 
 substitutes = {
     'link' : r'<a href="\1">\2</a>',
-    'img'  : r'<img href="\1" alt="\2">'
+    'img'  : r'<img src="\1" alt="\2">'
+}
+
+subtags = {
+    'bold' : 'b',
+
+    'section' : 'h1',
+    'subsection' : 'h2',
+
+    'paragraph' : 'p',
+
+    'list' : 'ul',
+    'ordered-list' : 'ol',
+    'item' : 'li'
 }
 
 class File:
@@ -41,10 +54,8 @@ class File:
             newline = re.sub(patterns['link'], substitutes['img'], content)
             return newline
 
-        if tag == 'section':
-            tag = 'h1'
-        elif tag == 'subsection':
-            tag = 'h2'
+        if tag in subtags:
+            tag = subtags[tag]
         return '<'+tag+'>' + content + '</'+tag+'>'
 
     def parseTag(self, line):
@@ -62,5 +73,8 @@ class File:
     def parseline(self, line):
         if re.match(patterns['setter'], line):
             self.parseSetter(line)
-        elif re.search(patterns['tag'], line):
-            self.parsed += self.parseTag(line) + '\n'
+        else:
+            while re.search(patterns['tag'], line):
+                line = self.parseTag(line)
+
+            self.parsed += line + '\n'

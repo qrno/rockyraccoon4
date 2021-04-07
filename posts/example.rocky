@@ -5,10 +5,12 @@
 
 [ section Introduction ]
 
-It's a good day [ b hello world ] everyone
+It's a good day [ b hello world ] everyone [ b two tags in one line ]
 
 [ subsection Flamengo = best team ]
 
 wow [ link google.com Melhor Site de todos ] does this work?
+
+[ image https://santhatela.com.br/wp-content/uploads/2019/05/monet-montes-de-feno-d.jpg a nice day in the park ]
 
 This is my first post
