@@ -2,14 +2,30 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="static/base.css">
 	<title>[[ title ]]</title>
 </head>
 <body>
-	<h1>My bloggie</h1>
-	<h1>[[ title ]]</h1>
-	<hr>
-		[[ content ]]
-	<hr>
-	Footnote	
+
+	<div class="sidebar">
+		<h1>quirino.net</h1>
+		<ul>
+			<li><a href="#">Homepage</a></li>
+			<li><a href="#">About</a></li>
+		</ul>
+	</div>
+
+	<div class="main">
+		<h1>[[ title ]]</h1>
+		<hr>
+
+		<div class="content">
+			[[ content ]]
+		</div>
+
+		<hr>
+		Written on <b>[[ date ]]</b>
+	</div>
+
 </body>
 </html>

@@ -3,7 +3,7 @@ import re
 
 patterns = {
     'setter' : '(]) (\w+) (.+)',
-    'tag' : '(\[) (\w+) (.[^\]]+) (])',
+    'tag' : '(\[) (\w+) ([^\]\[]+) (])',
     'link' : '([^ ]+) (.+)',
 }
 
@@ -14,15 +14,12 @@ substitutes = {
 
 subtags = {
     'bold' : 'b',
+    'italic' : 'i',
 
     'section' : 'h1',
     'subsection' : 'h2',
 
     'paragraph' : 'p',
-
-    'list' : 'ul',
-    'ordered-list' : 'ol',
-    'item' : 'li'
 }
 
 class File:
@@ -71,7 +68,9 @@ class File:
         return newline
     
     def parseline(self, line):
-        if re.match(patterns['setter'], line):
+        if len(line) > 0 and line[0] == '%':
+            self.parsed += line[1:] + '\n'
+        elif re.match(patterns['setter'], line):
             self.parseSetter(line)
         else:
             while re.search(patterns['tag'], line):

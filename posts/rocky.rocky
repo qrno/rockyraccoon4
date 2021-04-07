@@ -1,0 +1,14 @@
+] slug rocky
+] template base
+] date 2021-04-06
+] title Rocky Raccoon
+
+[ section what is Rocky Raccoon? ]
+
+[ paragraph Rocky Raccoon is a static website generator written in Python. It takes in files in a fictional markup language called [ bold rocky ] and, given a template, generates a html file. This blog is generated using Rocky Raccoon. ]
+
+[ paragraph On the rocky files you can set data that can be usd on the template (for example on the [ code html title ] tag.) ]
+
+[ section features ]
+
+[ paragraph Rocky Raccoon currently has support for the followigng tags: section (which is converted to h1), subsection (h2), link (a), image (img), paragraph (p), bold (b) and italic (i). ]

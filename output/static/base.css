@@ -1,0 +1,17 @@
+.sidebar {
+	min-width: 200px;
+	max-width: 200px;
+
+	flex: auto;
+}
+
+.main {
+	min-width: 600px;
+	max-width: 600px;
+
+	flex: auto;
+}
+
+body {
+	display: flex;
+}
