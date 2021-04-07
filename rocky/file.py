@@ -16,8 +16,8 @@ subtags = {
     'bold' : 'b',
     'italic' : 'i',
 
-    'section' : 'h1',
-    'subsection' : 'h2',
+    'section' : 'h2',
+    'subsection' : 'h3',
 
     'paragraph' : 'p',
 }
