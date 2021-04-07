@@ -18,9 +18,9 @@ class Template:
             if result:
                 key = result.group(1)
                 if key == 'content':
-                    newline = re.sub(patterns['var'], content, line)
+                    newline = re.sub(patterns['var'], content, line, 1)
                 elif key in attributes:
-                    newline = re.sub(patterns['var'], attributes[key], line)
+                    newline = re.sub(patterns['var'], attributes[key], line, 1)
 
             rendered += newline + '\n'
         return rendered

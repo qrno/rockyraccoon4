@@ -45,10 +45,10 @@ class File:
 
     def processTag(self, tag, content):
         if tag == 'link':
-            newline = re.sub(patterns['link'], substitutes['link'], content)
+            newline = re.sub(patterns['link'], substitutes['link'], content, 1)
             return newline
         if tag == 'image':
-            newline = re.sub(patterns['link'], substitutes['img'], content)
+            newline = re.sub(patterns['link'], substitutes['img'], content, 1)
             return newline
 
         if tag in subtags:
@@ -64,7 +64,7 @@ class File:
         print("Processing", tag, "\t", content)
 
         processed = self.processTag(tag, content)
-        newline = re.sub(patterns['tag'], processed, line)
+        newline = re.sub(patterns['tag'], processed, line, 1)
         return newline
     
     def parseline(self, line):
